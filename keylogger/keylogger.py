@@ -1,42 +1,47 @@
-from pynput import keyboard
 import time
+from pynput import keyboard
+from buffer import Buffer
 
 
-pressed_keys = []
-
-
-def on_key_release(key: keyboard._win32.KeyCode) -> bool:
-    """
-    Event method if a key was released.
-    :param key: The released key.
-    :return: true, if the listening should be continued.
-    """
-    if key not in pressed_keys:
+class Keylogger:
+    def on_key_release(self, key) -> bool:
+        """
+        Event method if a key was released
+        :param key: The released key
+        :return: true, if the listening should be continued
+        """
+        if key not in self.__pressed_keys:
+            return True
+        self.__pressed_keys.remove(key)
+        release_time = time.time()
+        self.__buffer.write_to_buffer([str(key), release_time, False])
         return True
-    pressed_keys.remove(key)
-    release_time = time.time()
-    print(release_time, ": ",  key, " released")
-    return True
 
-def on_key_press(key: keyboard._win32.KeyCode) -> bool:
-    """
-    Event method if a key was pressed.
-    :param key: The pressed key.
-    :return: true, if the listening should be continued.
-    """
-    if key in pressed_keys:
+    def on_key_press(self, key) -> bool:
+        """
+        Event method if a key was pressed
+        :param key: The pressed key
+        :return: true, if the listening should be continued
+        """
+        if key in self.__pressed_keys:
+            return True
+        self.__pressed_keys.append(key)
+        press_time = time.time()
+        self.__buffer.write_to_buffer([str(key), press_time, True])
         return True
-    pressed_keys.append(key)
-    press_time = time.time()
-    print(press_time, ": ", key, " pressed")
-    return True
 
+    def __init__(self, buffer: Buffer):
+        """
+        Initialize an Instance with given Buffer
+        :param buffer: Object of the Buffer class
+        """
+        self.__pressed_keys = []
+        self.__buffer = buffer
 
-def start_logger() -> int:
-    """
-    The method to initialize the key press and key release listener.
-    :return: -1 if an error occured.
-    """
-    with keyboard.Listener(on_press=on_key_press, on_release=on_key_release) as listener:
-        listener.join()
-    return -1
+    def start_logging(self) -> None:
+        """
+        This starts the logging process
+        """
+        with keyboard.Listener(on_press=self.on_key_press, on_release=self.on_key_release) as listener:
+            listener.join()
+        raise Exception("Listener stopped")

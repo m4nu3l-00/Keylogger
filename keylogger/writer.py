@@ -1,4 +1,5 @@
 import csv
+from buffer import Buffer
 
 
 class CsvWriter:
