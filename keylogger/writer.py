@@ -1,5 +1,6 @@
 import csv
 from buffer import Buffer
+import os
 
 
 class CsvWriter:
@@ -10,6 +11,17 @@ class CsvWriter:
         :param buffer: Object of the Buffer class
         """
         self.__buffer = buffer
+        if os.path.isfile("./keylogger.csv"):
+            os.remove("./keylogger.csv")
+        try:
+            self.__csv_file = open('keylogger.csv', 'a+', newline='')
+            self.__writer = csv.writer(self.__csv_file)
+
+        except Exception as e:
+            raise Exception(e)
+
+    def __del__(self):
+        self.__csv_file.close()
 
     def read_buffer(self) -> None:
         """
@@ -26,14 +38,13 @@ class CsvWriter:
             except Exception as e:
                 raise Exception(e)
 
-    @staticmethod
-    def write_csv(event_array: list) -> None:
+    def write_csv(self, event_array: list) -> None:
         """
         Writes Data from the Array into a csv-Files
         Structure of the File ist: Key, Time, Event
         :param event_array: Format of the List (String: Key, int: Time, bool: Event)
         Event=1 -> press; Event=0 ->release
         """
-        with open('keylogger.csv', 'a', newline='') as csv_file:
-            writer = csv.writer(csv_file)
-            writer.writerow(event_array)
+        self.__writer.writerow(event_array)
+        self.__csv_file.flush()
+        os.fsync(self.__csv_file.fileno())
