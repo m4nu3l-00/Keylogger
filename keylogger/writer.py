@@ -21,6 +21,9 @@ class CsvWriter:
             raise Exception(e)
 
     def __del__(self):
+        """
+        Close the opened File while deleting Object
+        """
         self.__csv_file.close()
 
     def read_buffer(self) -> None:
