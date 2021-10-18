@@ -20,12 +20,6 @@ class CsvWriter:
         except Exception as e:
             raise Exception(e)
 
-    def __del__(self):
-        """
-        Close the opened File while deleting Object
-        """
-        self.__csv_file.close()
-
     def read_buffer(self) -> None:
         """
         Reads continuous the Buffer and calls the write_csv function
@@ -34,6 +28,9 @@ class CsvWriter:
         while True:
             try:
                 event_array = list(self.__buffer.read_from_buffer())
+                if event_array[0] == 'Key.end':
+                    self.__csv_file.close()
+                    return
                 if type(event_array[0]) == str and type(event_array[1]) == float and type(event_array[2]) == bool:
                     self.write_csv(event_array)
                 else:
