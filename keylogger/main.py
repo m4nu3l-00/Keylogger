@@ -10,16 +10,17 @@ def main() -> None:
     """
     The main-Method of the program
     """
-
-    buffer = Buffer()
-    keylogger = Keylogger(buffer)
-    writer = CsvWriter(buffer)
-    writer_thread = threading.Thread(target=writer.read_buffer)
-    writer_thread.setDaemon(True)
-    writer_thread.start()
-    keylogger.start_logging()
-    writer_thread.join()
-    sys.exit()
+    console = Console()
+    Control(console)
+    #buffer = Buffer()
+    #keylogger = Keylogger(buffer)
+    #writer = CsvWriter(buffer)
+    #writer_thread = threading.Thread(target=writer.read_buffer)
+    #writer_thread.daemon = True
+    #writer_thread.start()
+    #keylogger.start_logging()
+    #writer_thread.join()
+    #sys.exit()
 
 
 if __name__ == "__main__":
