@@ -18,7 +18,7 @@ class CsvWriter:
             self.__writer = csv.writer(self.__csv_file)
 
         except Exception as e:
-            raise Exception(e)
+            raise Exception("Beim Öffnen der File ist ein Fehler aufgetreten!")
 
     def read_buffer(self) -> None:
         """

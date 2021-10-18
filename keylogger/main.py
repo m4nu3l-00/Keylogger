@@ -1,9 +1,10 @@
-import sys
-import threading
-from buffer import Buffer
-from keylogger import Keylogger
-from writer import CsvWriter
-
+#import sys
+#import threading
+#from buffer import Buffer
+#from keylogger import Keylogger
+#from writer import CsvWriter
+from console import Console
+from control import Control
 
 def main() -> None:
     """
