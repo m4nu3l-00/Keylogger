@@ -7,6 +7,7 @@ from control import Control
 def main(argv) -> None:
     """
     The main-Method of the program
+    The arguments are evaluated and the respective view (and control) is started
     """
     console = False
     gui = False

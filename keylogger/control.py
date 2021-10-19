@@ -15,6 +15,10 @@ class Control:
         self.__view.start_view(self)
 
     def start(self) -> bool:
+        """
+        This method is used to start the keylogger.
+        :return: True, if the keylogger was started; False, if it is already active
+        """
         if self.__running_keylogger is not None:
             return False
 
@@ -29,16 +33,31 @@ class Control:
         self.__running_keylogger.start_logging()
         return True
 
-    def stop(self):
+    def stop(self) -> None:
+        """
+        This method is used to stop the keylogger.
+        """
         self.__running_keylogger.stop_logging()
         self.__writer_thread.Join()
         self.__running_keylogger = None
 
     def keylogger_is_running(self) -> bool:
+        """
+        This method is used to check if the keylogger is running
+        :return: True, if the keylogger is running.
+        """
         return self.__running_keylogger is not None
 
     def get_stop_key(self) -> str:
+        """
+        This method is used to get current stop key
+        :return: The current stop key
+        """
         return self.__stop_key
 
-    def set_stop_key(self, key: str):
+    def set_stop_key(self, key: str) -> None:
+        """
+        This method is used to set a new stop key
+        :param key: The key which should be used as stop key
+        """
         self.__stop_key = key
