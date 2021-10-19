@@ -14,16 +14,23 @@ class Console(View):
                     print("Keylogger erfolgreich gestartet!")
                 else:
                     print("Der Keylogger läuft bereits!")
-            if console_input == "Stop":
-                control.stop()
-            if console_input == "Exit":
+            elif console_input == "Stop":
+                if control.stop():
+                    print("Keylogger erfolgreich beendet!")
+                else:
+                    print("Der Keylogger ist bereits beendet!")
+            elif console_input == "Exit":
                 if control.keylogger_is_running():
-                    print("Bitte beende den Keylogger zuerst.")
+                    print("Bitte beende den Keylogger zuerst!")
                 else:
                     sys.exit()
-            if console_input == "Setze Stop-Key":
+            elif console_input == "Setze Stop-Key":
                 pass#TODO
-            if console_input == "Zeige Stop-Key":
+            elif console_input == "Zeige Stop-Key":
                 pass#TODO
-            if console_input == "Hilfe":
+            elif console_input == "Hilfe":
                 pass#TODO Alle Befehle anzeigen
+            elif console_input == "Hilfe":
+                pass#TODO Alle Befehle anzeigen
+            else:
+                print("Das ist kein gültiger Befehl!")

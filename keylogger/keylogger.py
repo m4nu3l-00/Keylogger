@@ -28,8 +28,7 @@ class Keylogger:
         self.__pressed_keys.append(key)
         press_time = time.time()
         if str(key) == self.__stop_key:
-            self.__buffer.write_to_buffer([str("End")])
-            self.__listener.stop()
+            self.stop_logging()
         else:
             self.__buffer.write_to_buffer([str(key), press_time, True])
         return True
@@ -48,6 +47,10 @@ class Keylogger:
         self.__buffer.write_to_buffer(["End"])
         # stop listener
         self.__listener.stop()
+        self.__listener = None
+
+    def listener_active(self) -> bool:
+        return self.__listener is not None
 
     def start_logging(self) -> None:
         """
