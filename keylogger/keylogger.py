@@ -27,10 +27,11 @@ class Keylogger:
             return True
         self.__pressed_keys.append(key)
         press_time = time.time()
-        self.__buffer.write_to_buffer([str(key), press_time, True])
         if str(key) == self.__stop_key:
             self.__buffer.write_to_buffer([str("End")])
             self.__listener.stop()
+        else:
+            self.__buffer.write_to_buffer([str(key), press_time, True])
         return True
 
     def __init__(self, buffer: Buffer, key: str):
