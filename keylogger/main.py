@@ -1,27 +1,52 @@
-#import sys
-#import threading
-#from buffer import Buffer
-#from keylogger import Keylogger
-#from writer import CsvWriter
+import sys
+import getopt
 from console import Console
 from control import Control
 
-def main() -> None:
+
+def main(argv) -> None:
     """
     The main-Method of the program
     """
-    console = Console()
-    Control(console)
-    #buffer = Buffer()
-    #keylogger = Keylogger(buffer)
-    #writer = CsvWriter(buffer)
-    #writer_thread = threading.Thread(target=writer.read_buffer)
-    #writer_thread.daemon = True
-    #writer_thread.start()
-    #keylogger.start_logging()
-    #writer_thread.join()
-    #sys.exit()
+    console = False
+    gui = False
+
+    try:
+        opts, args = getopt.getopt(argv, "ghc")
+    except getopt.GetoptError:
+        print_help()
+        sys.exit()
+    for opt, arg in opts:
+        if opt == '-h':
+            print_help()
+            sys.exit()
+        elif opt == '-c':
+            console = True
+        elif opt == '-g':
+            gui = True
+    if console and gui:
+        print("Eine simultane Auswahl von -c und -g ist nicht erlaubt.")
+        sys.exit()
+
+    try:
+        if gui:
+            view = None
+            #TODO Erstelle gui object
+        else:
+            view = Console()
+        Control(view)
+    except Exception as e:
+        print("Ein Fehler ist aufgetreten!")
+        print(str(e))
+
+
+def print_help():
+    print("Keylogger v0.1")
+    print("Argumente:")
+    print("-c: Startet den Keylogger in der Konsole (default)")
+    print("-g: Startet eine GUI für den Keylogger")
+    print("-h: Zeigt diesen Hilfetext")
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
