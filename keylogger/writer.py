@@ -16,9 +16,8 @@ class CsvWriter:
         try:
             self.__csv_file = open('keylogger.csv', 'a+', newline='')
             self.__writer = csv.writer(self.__csv_file)
-
-        except Exception as e:
-            raise Exception("Beim Öffnen der File ist ein Fehler aufgetreten!")
+        except Exception:
+            raise Exception("Error during opening File")
 
     def read_buffer(self) -> None:
         """
@@ -28,15 +27,15 @@ class CsvWriter:
         while True:
             try:
                 event_array = list(self.__buffer.read_from_buffer())
-                if event_array[0] == 'Key.end':
+                if event_array[0] == 'End':
                     self.__csv_file.close()
                     return
                 if type(event_array[0]) == str and type(event_array[1]) == float and type(event_array[2]) == bool:
                     self.write_csv(event_array)
                 else:
                     raise Exception("Type Error")
-            except Exception as e:
-                raise Exception(e)
+            except Exception:
+                raise Exception("Error while reading Buffer")
 
     def write_csv(self, event_array: list) -> None:
         """
