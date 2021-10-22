@@ -51,7 +51,7 @@ class GUI(View):
         self.SetButton.setText("Set end-key")
         self.label.setText("End-key:")
         self.StartButton.clicked.connect(self.clicked_start)
-        self.SetButton.clicked.conect(self.clicked_get_key())
+        self.SetButton.clicked.connect(self.clicked_get_key)
         window.show()
         app.setStyle("Fusion")
         app.exec()
@@ -65,8 +65,10 @@ class GUI(View):
     def clicked_start(self):
         if self.StartButton.text() == "Start":
             self.StartButton.setText("Stop")
+            self.SetButton.setEnabled(False)
         elif self.StartButton.text() == "Stop":
             self.StartButton.setText("Start")
+            self.SetButton.setEnabled(True)
         pass # Todo: Start/stop keylogger
 
     def clicked_get_key(self):
