@@ -8,8 +8,9 @@ class Console(View):
     def start_view(self, control: Control):
         print("Welcome to the Keylogger!")
         while True:
-            console_input = input()
-            if console_input == "Start":
+            console_input = input().lower()
+
+            if console_input == "start":
                 if control.start():
                     print("Keylogger started successfully.")
                     key = control.get_stop_key().replace('\'', '')
@@ -23,7 +24,7 @@ class Console(View):
 
             elif console_input == "exit":
                 if control.keylogger_is_running():
-                    print("Bitte beende den Keylogger zuerst!")
+                    print("Please terminate the keylogger first.")
                 else:
                     sys.exit()
 

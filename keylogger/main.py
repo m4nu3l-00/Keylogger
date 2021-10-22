@@ -2,13 +2,24 @@ import sys
 import getopt
 from console import Console
 from control import Control
-
+from Keylogger_gui import UiKeylogger
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout
 
 def main(argv) -> None:
     """
     The main-Method of the program
     The arguments are evaluated and the respective view (and control) is started
     """
+    #Test
+
+    app = QApplication([])
+    window = QWidget()
+    x = UiKeylogger()
+    x.setup(window)
+    window.show()
+    app.setStyle("Fusion")
+    app.exec()
+    #Test
     console = False
     gui = False
 
@@ -26,7 +37,7 @@ def main(argv) -> None:
         elif opt == '-g':
             gui = True
     if console and gui:
-        print("Eine simultane Auswahl von -c und -g ist nicht erlaubt.")
+        print("A simultaneous use of -c and -g is not allowed.")
         sys.exit()
 
     try:
@@ -37,16 +48,16 @@ def main(argv) -> None:
             view = Console()
         Control(view)
     except Exception as e:
-        print("Ein Fehler ist aufgetreten!")
+        print("An error occurred!")
         print(str(e))
 
 
 def print_help():
     print("Keylogger v0.1")
-    print("Argumente:")
-    print("-c: Startet den Keylogger in der Konsole (default)")
-    print("-g: Startet eine GUI für den Keylogger")
-    print("-h: Zeigt diesen Hilfetext")
+    print("Arguments:")
+    print("-c: Starts the keylogger in the console (default)")
+    print("-g: Starts a GUI for the keylogger")
+    print("-h: Shows this help-text")
 
 
 if __name__ == "__main__":

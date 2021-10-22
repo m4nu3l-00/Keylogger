@@ -11,19 +11,10 @@ class CsvWriter:
         :param buffer: Object of the Buffer class
         """
         self.__buffer = buffer
-        if os.path.isfile("./keylogger.csv"):
-            os.remove("./keylogger.csv")
-        try:
-            self.__csv_file = open('keylogger.csv', 'a+', newline='')
-            self.__writer = csv.writer(self.__csv_file)
-        except Exception:
-            raise Exception("Error during opening File")
+        self.__csv_file = None
 
     def read_buffer(self) -> None:
-        """
-        Reads continuous the Buffer and calls the write_csv function
-        :return: Returns if everything is fine, otherwise throws Exceptions
-        """
+        self.__open_file()
         while True:
             try:
                 event_array = list(self.__buffer.read_from_buffer())
@@ -31,19 +22,22 @@ class CsvWriter:
                     self.__csv_file.close()
                     return
                 if type(event_array[0]) == str and type(event_array[1]) == float and type(event_array[2]) == bool:
-                    self.write_csv(event_array)
+                    self.__write_csv(event_array)
                 else:
                     raise Exception("Type Error")
             except Exception:
                 raise Exception("Error while reading Buffer")
 
-    def write_csv(self, event_array: list) -> None:
-        """
-        Writes Data from the Array into a csv-Files
-        Structure of the File ist: Key, Time, Event
-        :param event_array: Format of the List (String: Key, int: Time, bool: Event)
-        Event=1 -> press; Event=0 ->release
-        """
-        self.__writer.writerow(event_array)
+    def __open_file(self):
+        try:
+            if os.path.isfile("./keylogger.csv"):
+                os.remove("./keylogger.csv")
+            self.__csv_file = open('keylogger.csv', 'a+', newline='')
+        except Exception:
+            raise Exception("Error during opening File")
+
+    def __write_csv(self, event_array: list) -> None:
+        writer = csv.writer(self.__csv_file)
+        writer.writerow(event_array)
         self.__csv_file.flush()
         os.fsync(self.__csv_file.fileno())
