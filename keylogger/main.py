@@ -2,24 +2,15 @@ import sys
 import getopt
 from console import Console
 from control import Control
-from Keylogger_gui import UiKeylogger
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout
+
+from gui import GUI
+
 
 def main(argv) -> None:
     """
     The main-Method of the program
     The arguments are evaluated and the respective view (and control) is started
     """
-    #Test
-
-    app = QApplication([])
-    window = QWidget()
-    x = UiKeylogger()
-    x.setup(window)
-    window.show()
-    app.setStyle("Fusion")
-    app.exec()
-    #Test
     console = False
     gui = False
 
@@ -41,11 +32,10 @@ def main(argv) -> None:
         sys.exit()
 
     try:
-        if gui:
-            view = None
-            #TODO Erstelle gui object
-        else:
+        if console:
             view = Console()
+        else:
+            view = GUI()
         Control(view)
     except Exception as e:
         print("An error occurred!")
