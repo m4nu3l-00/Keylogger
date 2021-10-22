@@ -43,14 +43,30 @@ class Keylogger:
         self.__listener = None
         self.__stop_key = key
 
-    def stop_logging(self):
-        self.__buffer.write_to_buffer(["End"])
-        # stop listener
-        self.__listener.stop()
-        self.__listener = None
+    def stop_logging(self) -> None:
+        """
+        Stops the Keylogger and writes End to the Buffer so the writer will stop too
+        The implementation is thread safe
+        """
+        with self.__stop_lock:
+            if not self.__keylogger_stopped.is_set():
+                self.__buffer.write_to_buffer(["End"])
+                self.__keylogger_stopped.set()
+                try:
+                    self.__listener.stop()
+                    self.__listener = None
+                except Exception:
+                    raise Exception("Error while stopping Keylogger")
 
-    def listener_active(self) -> bool:
-        return self.__listener is not None
+    def keylogger_running(self) -> bool:
+        """
+        Check if the Logger is still active
+        :return: True, if the keylogger is running
+        """
+        return not self.__keylogger_stopped.is_set()
+
+    def wait_for_keylogger_stopped(self) -> None:
+        self.__keylogger_stopped.wait()
 
     def start_logging(self) -> None:
         """
@@ -60,5 +76,5 @@ class Keylogger:
             self.__listener = keyboard.Listener(on_press=self.on_key_press, on_release=self.on_key_release)
             self.__listener.start()
         except Exception:
-            Exception("Error while starting Keylogger")
+            raise Exception("Error while starting Keylogger")
         return
