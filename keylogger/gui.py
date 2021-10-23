@@ -11,7 +11,7 @@ class GUI(View):
     def __init__(self):
         self.__control = None
 
-        self.__app = QtWidgets.QApplication([])
+        self.__app = QtWidgets.QApplication(sys.argv)
         self.__app.setStyle("Fusion")
         self.__window = QtWidgets.QWidget()
         self.__window.setWindowIcon(QtGui.QIcon('icon.png'))
@@ -23,7 +23,7 @@ class GUI(View):
         app_icon.addFile('icon.png', QtCore.QSize(256, 256))
         self.__app.setWindowIcon(app_icon)
 
-        self.__window.resize(441, 415)
+        self.__window.resize(270, 110)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(1)
         sizePolicy.setVerticalStretch(1)
@@ -88,8 +88,17 @@ class GUI(View):
     def start_view(self, control: Control):
         self.__control = control
         self.__end_key_output.setText(self.__control.get_stop_key())
+        self.__app.aboutToQuit.connect(self.end_after_close)
         self.__window.show()
         sys.exit(self.__app.exec())
+
+    def end_after_close(self):
+        if self.__control.keylogger_is_running():
+            if self.__control.stop():
+                QtWidgets.QMessageBox.about(self.__window, "Keylogger Stopped", "Keylogger has been stopped")
+            else:
+                QtWidgets.QMessageBox.critical(self.__window, "Error!", "Can't stop Keylogger before Closing")
+        return sys.argv
 
     def show_keylogger_stopped(self):
         self.__start_button.setText("Start")
