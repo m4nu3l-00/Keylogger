@@ -83,7 +83,7 @@ class GUI(View):
         self.__app.exec()
 
     def show_keylogger_stopped(self):
-        self.__start_button.setText("Stop")
+        self.__start_button.setText("Start")
         self.__set_button.setEnabled(True)
 
     def __clicked_start(self):
