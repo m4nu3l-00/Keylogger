@@ -13,7 +13,7 @@ class Console(View):
             if console_input == "start":
                 if control.start():
                     print("Keylogger started successfully.")
-                    key = control.get_stop_key().replace('\'', '')
+                    key = control.get_stop_key()
                     print("Type \"stop\" or press \"%s\" to end the keylogger." % key)
                 else:
                     print("Keylogger is already running.")
@@ -31,11 +31,11 @@ class Console(View):
             elif console_input == "set stop key":
                 print("Please press the key you want to use as stop key.")
                 if control.set_stop_key():
-                    key = control.get_stop_key().replace('\'', '')
+                    key = control.get_stop_key()
                     print("\nKey \"%s\" was set as stop-key." % key)
 
             elif console_input == "show stop key":
-                key = control.get_stop_key().replace('\'', '')
+                key = control.get_stop_key()
                 print("\nKey \"%s\" was set as stop-key." % key)
 
             elif console_input == "help":
