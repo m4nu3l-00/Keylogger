@@ -1,14 +1,19 @@
 import sys
+import threading
+
 from view import View
 from control import Control
 
 
 class Console(View):
+    def __init__(self):
+        self.__write_lock = threading.Lock()
 
     def start_view(self, control: Control):
         print("Welcome to the Keylogger!")
         while True:
             console_input = input().lower()
+            self.__write_lock.acquire()
 
             if console_input == "start":
                 if control.start():
@@ -32,11 +37,11 @@ class Console(View):
                 print("Please press the key you want to use as stop key.")
                 if control.set_stop_key():
                     key = control.get_stop_key()
-                    print("\nKey \"%s\" was set as stop-key." % key)
+                    print("Key \"%s\" was set as stop-key." % key)
 
             elif console_input == "show stop key":
                 key = control.get_stop_key()
-                print("\nKey \"%s\" was set as stop-key." % key)
+                print("Key \"%s\" was set as stop-key." % key)
 
             elif console_input == "help":
                 print("Possible commands are:")
@@ -54,5 +59,9 @@ class Console(View):
             else:
                 print("Unknown command! Type \"help\" to get all commands.")
 
+            if console_input != "stop":
+                self.__write_lock.release()
+
     def show_keylogger_stopped(self):
         print("Keylogger terminated successfully!")
+        self.__write_lock.release()

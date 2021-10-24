@@ -10,9 +10,9 @@ class GUI(View):
     def __init__(self):
         self.__control = None
         self.__state = "Start"
+        self.__click_lock = threading.Lock()
 
         self.__window = tk.Tk()
-        #self.__window.geometry('300x' + str(int(self.__window.winfo_screenwidth()*0.2)))
         self.__window.resizable(True, False)
         self.__window.title('Keylogger')
         self.__window.protocol("WM_DELETE_WINDOW", self.__end_after_close)
@@ -80,13 +80,16 @@ class GUI(View):
     def show_keylogger_stopped(self):
         self.__start_button['text'] = "Start"
         self.__set_button['state'] = 'normal'
+        self.__click_lock.release()
 
     def __clicked_start(self):
+        self.__click_lock.acquire()
         if self.__start_button['text'] == "Start":
             self.__start_button['text'] = "Stop"
             self.__set_button['state'] = 'disabled'
             if not self.__control.start():
                 messagebox.showerror("Error!", "Keylogger could not be started.")
+            self.__click_lock.release()
         elif self.__start_button['text'] == "Stop":
             if not self.__control.stop():
                 messagebox.showerror("Error!", "Keylogger could not be stopped.")
