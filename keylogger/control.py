@@ -67,7 +67,8 @@ class Control:
         This method is used to get current stop key
         :return: The current stop key
         """
-        return self.__stop_key.replace('\'', '').replace('Key.', '').replace('[', '').replace(']', '').upper()
+        return self.__stop_key.replace('\'', '').replace('Key.', '').replace('[', '').replace(']', '')\
+            .upper().replace('SS', 'ß')
 
     def set_stop_key(self) -> bool:
         """
