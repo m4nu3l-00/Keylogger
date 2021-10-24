@@ -67,14 +67,7 @@ class GUI(View):
         self.__end_key_text.delete('1.0', tk.END)
         self.__end_key_text.insert('1.0', control.get_stop_key())
         self.__end_key_text['state'] = 'disabled'
-        while True:
-            if self.__state == "Start":
-                self.__start_button.config(text="Start")
-                self.__set_button["state"] = "normal"
-            elif self.__state == "Stop":
-                self.__start_button.config(text="Stop")
-                self.__set_button["state"] = "disabled"
-            self.__window.update()
+        self.__window.mainloop()
 
     def __end_after_close(self):
         if self.__control.keylogger_is_running():
@@ -85,15 +78,16 @@ class GUI(View):
         self.__window.destroy()
 
     def show_keylogger_stopped(self):
-        self.__state = "Start"
+        self.__start_button['text'] = "Start"
+        self.__set_button['state'] = 'normal'
 
     def __clicked_start(self):
         if self.__start_button['text'] == "Start":
-            self.__state = "Stop"
+            self.__start_button['text'] = "Stop"
+            self.__set_button['state'] = 'disabled'
             if not self.__control.start():
                 messagebox.showerror("Error!", "Keylogger could not be started.")
         elif self.__start_button['text'] == "Stop":
-            self.__state = "Start"
             if not self.__control.stop():
                 messagebox.showerror("Error!", "Keylogger could not be stopped.")
 
