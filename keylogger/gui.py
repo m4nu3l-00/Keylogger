@@ -34,7 +34,7 @@ class GUI(View):
         self.__window.setWindowTitle("Keylogger")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.__window)
         self.verticalLayout.setObjectName("verticalLayout")
-        _translate = QtCore.QCoreApplication.translate
+        translate = QtCore.QCoreApplication.translate
 
         # StartButton
         self.__start_button = QtWidgets.QPushButton(self.__window)
@@ -45,7 +45,7 @@ class GUI(View):
         self.__start_button.setSizePolicy(size_policy)
         self.__start_button.setObjectName("SetButton")
         self.verticalLayout.addWidget(self.__start_button)
-        self.__start_button.setText(_translate("Keylogger", "Start"))
+        self.__start_button.setText(translate("Keylogger", "Start"))
 
         # SetButton
         self.__set_button = QtWidgets.QPushButton(self.__window)
@@ -56,7 +56,7 @@ class GUI(View):
         self.__set_button.setSizePolicy(size_policy)
         self.__set_button.setObjectName("SetButton")
         self.verticalLayout.addWidget(self.__set_button)
-        self.__set_button.setText(_translate("Keylogger", "Set end-key"))
+        self.__set_button.setText(translate("Keylogger", "Set end-key"))
 
         # EndKeyLabel
         self.__end_key_label = QtWidgets.QLabel(self.__window)
@@ -79,7 +79,7 @@ class GUI(View):
         self.__end_key_output.setReadOnly(True)
         self.__end_key_output.setObjectName("EndKeyOutput")
         self.verticalLayout.addWidget(self.__end_key_output)
-        self.__end_key_output.setText(_translate("Keylogger", "EndKeyOutput"))
+        self.__end_key_output.setText(translate("Keylogger", "EndKeyOutput"))
         self.__end_key_output.setAlignment(QtCore.Qt.AlignCenter)
 
         # Events
