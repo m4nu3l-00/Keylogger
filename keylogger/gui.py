@@ -16,6 +16,8 @@ class GUI(View):
         self.__window.resizable(True, False)
         self.__window.title('Keylogger')
         self.__window.protocol("WM_DELETE_WINDOW", self.__end_after_close)
+        photo = tk.PhotoImage(file="icon.png")
+        self.__window.iconphoto(False, photo)
 
         self.__start_button = tk.Button(
             self.__window,
