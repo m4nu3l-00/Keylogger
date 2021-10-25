@@ -70,6 +70,7 @@ class GUI(View):
         self.__window.mainloop()
 
     def __end_after_close(self):
+        self.__click_lock.acquire()
         if self.__control.keylogger_is_running():
             if self.__control.stop():
                 messagebox.showinfo("Keylogger Stopped", "Keylogger has been stopped.")
@@ -80,7 +81,8 @@ class GUI(View):
     def show_keylogger_stopped(self):
         self.__start_button['text'] = "Start"
         self.__set_button['state'] = 'normal'
-        self.__click_lock.release()
+        if self.__click_lock.locked():
+            self.__click_lock.release()
 
     def __clicked_start(self):
         self.__click_lock.acquire()
@@ -95,6 +97,7 @@ class GUI(View):
                 messagebox.showerror("Error!", "Keylogger could not be stopped.")
 
     def __clicked_set_key(self):
+        self.__click_lock.acquire()
         self.__start_button["state"] = "disabled"
         self.__set_button["state"] = "disabled"
 
@@ -119,3 +122,4 @@ class GUI(View):
 
         self.__start_button["state"] = "normal"
         self.__set_button["state"] = "normal"
+        self.__click_lock.release()

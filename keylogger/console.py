@@ -64,4 +64,5 @@ class Console(View):
 
     def show_keylogger_stopped(self):
         print("Keylogger terminated successfully!")
-        self.__write_lock.release()
+        if self. __write_lock.locked():
+            self.__write_lock.release()

