@@ -55,7 +55,6 @@ class Control:
         if not self.keylogger_is_running():
             return False
         self.__keylogger.stop_logging()
-        #self.__keylogger_monitoring_thread.join()
         return True
 
     def keylogger_is_running(self) -> bool:

