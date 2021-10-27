@@ -43,6 +43,9 @@ def main(argv) -> None:
 
 
 def print_help():
+    """
+    Prints the possible arguments for starting program
+    """
     print("Keylogger v0.1")
     print("Arguments:")
     print("-c: Starts the keylogger in the console (default)")

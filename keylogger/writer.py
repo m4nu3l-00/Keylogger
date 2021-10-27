@@ -14,6 +14,10 @@ class CsvWriter:
         self.__csv_file = None
 
     def read_buffer(self) -> None:
+        """
+        Read and clear the Item of the buffer
+        :return: no value given back, just returns
+        """
         self.__open_file()
         while True:
             try:
@@ -28,7 +32,10 @@ class CsvWriter:
             except Exception:
                 raise Exception("Error while reading Buffer")
 
-    def __open_file(self):
+    def __open_file(self) -> None:
+        """
+        opens the CSV- file
+        """
         try:
             if os.path.isfile("./keylogger.csv"):
                 os.remove("./keylogger.csv")
@@ -37,6 +44,10 @@ class CsvWriter:
             raise Exception("Error during opening File")
 
     def __write_csv(self, event_array: list) -> None:
+        """
+        writes an Item to the CSV- file and saves the csv- file
+        :param event_array:
+        """
         writer = csv.writer(self.__csv_file)
         writer.writerow(event_array)
         self.__csv_file.flush()

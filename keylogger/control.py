@@ -38,7 +38,10 @@ class Control:
         self.__keylogger_monitoring_thread.start()
         return True
 
-    def __monitor_keylogger(self):
+    def __monitor_keylogger(self) -> None:
+        """
+        Waits till the keylogger has stopped and notifies the view
+        """
         self.__keylogger.wait_for_keylogger_stopped()
         self.__writer_thread.join()
         self.__keylogger = None
