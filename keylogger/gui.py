@@ -71,7 +71,12 @@ class GUI(View):
         self.__end_key_text.delete('1.0', tk.END)
         self.__end_key_text.insert('1.0', control.get_stop_key())
         self.__end_key_text['state'] = 'disabled'
-        self.__window.mainloop()
+        try:
+            self.__window.mainloop()
+        except KeyboardInterrupt:
+            if self.__control.stop():
+                print("Keylogger has been stopped.")
+            self.__window.destroy()
 
     def __end_after_close(self) -> None:
         """
@@ -82,7 +87,7 @@ class GUI(View):
             if self.__control.stop():
                 messagebox.showinfo("Keylogger Stopped", "Keylogger has been stopped.")
             else:
-                messagebox.showerror("Error!", "Can't stop Keylogger before Closing.")
+                messagebox.showerror("Error!", "Couldn't stop Keylogger before Closing.")
         self.__window.destroy()
 
     def show_keylogger_stopped(self) -> None:
