@@ -1,7 +1,9 @@
+import sys
 import threading
 import tkinter as tk
 from tkinter import messagebox
 
+from keylogger import global_variables
 from view import View
 from control import Control
 
@@ -136,14 +138,27 @@ class GUI(View):
         """
         Sets the stop-key of the Keylogger
         """
-        if not self.__control.set_stop_key():
-            messagebox.showerror("Error!", "New End-Key could not be set.")
-        self.__end_key_text["state"] = "normal"
-        self.__end_key_text.delete('1.0', tk.END)
-        self.__end_key_text.insert('1.0', self.__control.get_stop_key())
-        self.__end_key_text.configure(fg="black")
-        self.__end_key_text['state'] = 'disabled'
+        try:
+            if not self.__control.set_stop_key():
+                messagebox.showerror("Error!", "New End-Key could not be set.")
+            self.__end_key_text["state"] = "normal"
+            self.__end_key_text.delete('1.0', tk.END)
+            self.__end_key_text.insert('1.0', self.__control.get_stop_key())
+            self.__end_key_text.configure(fg="black")
+            self.__end_key_text['state'] = 'disabled'
 
-        self.__start_button["state"] = "normal"
-        self.__set_button["state"] = "normal"
-        self.__click_lock.release()
+            self.__start_button["state"] = "normal"
+            self.__set_button["state"] = "normal"
+            self.__click_lock.release()
+        except:
+            global_variables.error_text = "The keylogger has crashed."
+            global_variables.error_flag.set()
+
+    def error(self, text: str) -> None:
+        """
+        Displays the error on the gui
+        :param text: Error-text
+        """
+        messagebox.showerror("Error!", "Error occurred:\n" + text)
+        self.__window.destroy()
+        sys.exit()

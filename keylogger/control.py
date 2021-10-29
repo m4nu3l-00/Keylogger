@@ -5,6 +5,8 @@ from view import View
 from writer import CsvWriter
 from one_log import OneLog
 
+import global_variables
+
 
 class Control:
     def __init__(self, view: View):
@@ -12,6 +14,9 @@ class Control:
         self.__keylogger = None
         self.__writer_thread = None
         self.__keylogger_monitoring_thread = None
+        error_thread = threading.Thread(target=self.__error_watcher)
+        error_thread.daemon = True
+        error_thread.start()
         self.__view = view
         self.__view.start_view(self)
 
@@ -42,10 +47,14 @@ class Control:
         """
         Waits till the keylogger has stopped and notifies the view
         """
-        self.__keylogger.wait_for_keylogger_stopped()
-        self.__writer_thread.join()
-        self.__keylogger = None
-        self.__view.show_keylogger_stopped()
+        try:
+            self.__keylogger.wait_for_keylogger_stopped()
+            self.__writer_thread.join()
+            self.__keylogger = None
+            self.__view.show_keylogger_stopped()
+        except:
+            global_variables.error_text = "Error while monitoring the keylogger."
+            global_variables.error_flag.set()
 
     def stop(self) -> bool:
         """
@@ -81,3 +90,12 @@ class Control:
             self.__stop_key = OneLog().log_key()
             return True
         return False
+
+    def __error_watcher(self) -> None:
+        """
+        This method waits till an error occures and uses the view to print the error meassage
+        """
+        global_variables.error_flag.wait()
+        self.__keylogger.stop_logging()
+        if global_variables.error_text != "":
+            self.__view.error(global_variables.error_text)

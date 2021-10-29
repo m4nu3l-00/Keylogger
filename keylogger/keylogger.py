@@ -2,6 +2,7 @@ import threading
 import time
 from pynput import keyboard
 from buffer import Buffer
+import global_variables
 
 
 class Keylogger:
@@ -26,9 +27,15 @@ class Keylogger:
         key_string = str(key).upper()
         if key_string not in self.__pressed_keys:
             return True
-        self.__pressed_keys.remove(key_string)
         release_time = time.time()
+        # Special Case if key is shift
+        if key_string == "KEY.SHIFT":
+            for char in self.__pressed_keys:
+                if not char.isalpha() and not char == "KEY.SHIFT":
+                    self.__buffer.write_to_buffer([char, release_time, False])
+                    self.__pressed_keys.remove(char)
         self.__buffer.write_to_buffer([key_string, release_time, False])
+        self.__pressed_keys.remove(key_string)
         return True
 
     def __on_key_press(self, key) -> bool:
@@ -78,12 +85,15 @@ class Keylogger:
             self.__listener_thread.daemon = True
             self.__listener_thread.start()
         except Exception:
-            raise Exception("Error while starting Keylogger")
-        return
+            raise Exception("Error while starting Keylogger.")
 
     def __run_listener(self) -> None:
         """
         This method is used to start the listener until the __keylogger_stopped event
         """
-        with keyboard.Listener(on_press=self.__on_key_press, on_release=self.__on_key_release):
-            self.__keylogger_stopped.wait()
+        try:
+            with keyboard.Listener(on_press=self.__on_key_press, on_release=self.__on_key_release):
+                self.__keylogger_stopped.wait()
+        except:
+            global_variables.error_text = "The keylogger has crashed."
+            global_variables.error_flag.set()
