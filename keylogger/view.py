@@ -13,3 +13,11 @@ class View:
         Should notify the user if the key was stopped
         """
         raise NotImplementedError('subclasses must override show_keylogger_stopped()!')
+
+    def error(self, text: str) -> None:
+        """
+        Abstract Method, must be overwritten
+        Should notify if an error occurred
+        :param text: Error-text
+        """
+        raise NotImplementedError('subclasses must override error()!')
