@@ -23,11 +23,12 @@ class Keylogger:
         :param key: The released key
         :return: true, if the listening should be continued
         """
-        if key not in self.__pressed_keys:
+        key_string = str(key).upper()
+        if key_string not in self.__pressed_keys:
             return True
-        self.__pressed_keys.remove(key)
+        self.__pressed_keys.remove(key_string)
         release_time = time.time()
-        self.__buffer.write_to_buffer([str(key), release_time, False])
+        self.__buffer.write_to_buffer([key_string, release_time, False])
         return True
 
     def __on_key_press(self, key) -> bool:
@@ -36,14 +37,15 @@ class Keylogger:
         :param key: The pressed key
         :return: true, if the listening should be continued
         """
-        if key in self.__pressed_keys:
+        key_string = str(key).upper()
+        if key_string in self.__pressed_keys:
             return True
-        self.__pressed_keys.append(key)
+        self.__pressed_keys.append(key_string)
         press_time = time.time()
-        if str(key) == self.__stop_key:
+        if key_string == self.__stop_key:
             self.stop_logging()
         else:
-            self.__buffer.write_to_buffer([str(key), press_time, True])
+            self.__buffer.write_to_buffer([key_string, press_time, True])
         return True
 
     def stop_logging(self) -> None:
