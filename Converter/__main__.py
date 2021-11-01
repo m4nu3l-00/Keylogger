@@ -13,6 +13,7 @@ def main(argv) -> None:
         with open(in_path) as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             for data in reader:
+                data[1] = float(data[1])
                 data[2] = data[2] == 'True'
                 in_data.append(data)
 
