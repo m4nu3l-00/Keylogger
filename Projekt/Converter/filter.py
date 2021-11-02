@@ -34,28 +34,11 @@ class Filter:
 
     def __reformat(self):
         translation_dict = {
-            "KEY.SPACE": "Space",
-            "KEY.SHIFT": "Shift",
-            "KEY.ALT_L": "Alt_l",
-            "KEY.ESC": "Esc",
-            "KEY.TAB": "Tab",
-            "KEY.BACKSPACE": "Backspace",
-            "KEY.F1": "F1",
-            "KEY.F2": "F2",
-            "KEY.F3": "F3",
-            "KEY.F4": "F4",
-            "KEY.F5": "F5",
-            "KEY.F6": "F6",
-            "KEY.F7": "F7",
-            "KEY.F8": "F8",
-            "KEY.F9": "F9",
-            "KEY.F10": "F10",
-            "KEY.F11": "F11",
-            "KEY.F12": "F12",
-            "\x06": "Strg F",
-            "\x01": "Strg A"
+            "\x06": "STRG F",
+            "\x01": "STRG A"
         }
         for key in self.event_array:
+            key[0] = key[0].replace('KEY.', '')
             if key[0] in translation_dict:
                 key[0] = translation_dict.get(key[0])
             elif "'" in key[0]:
