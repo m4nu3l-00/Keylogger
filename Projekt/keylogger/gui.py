@@ -84,7 +84,6 @@ class GUI(View):
         """
         Terminates the Keylogger if the window is closed and keylogger is still running
         """
-        self.__click_lock.acquire()
         if self.__control.keylogger_is_running():
             if self.__control.stop():
                 messagebox.showinfo("Keylogger Stopped", "Keylogger has been stopped.")
