@@ -18,7 +18,7 @@ class OneLog:
 
     def log_key(self) -> str:
         """
-        Use to log one key
+        Used to log one key
         :return: returns the pressed key
         """
         try:
