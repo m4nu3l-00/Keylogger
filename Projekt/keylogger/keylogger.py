@@ -50,7 +50,7 @@ class Keylogger:
             return True
         self.__pressed_keys.append(key_string)
         press_time = time.time()
-        if key_string == self.__stop_key:
+        if key_string == self.__stop_key.upper():
             self.stop_logging()
         else:
             self.__buffer.write_to_buffer([key_string, press_time, True])
