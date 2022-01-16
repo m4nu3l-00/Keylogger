@@ -3,14 +3,14 @@ import threading
 import tkinter as tk
 from tkinter import messagebox
 
-from keylogger import global_variables
+import global_variables
 from view import View
 from control import Control
 
 
 class GUI(View):
     def __init__(self):
-        self.__control = None
+        super(GUI, self).__init__()
         self.__state = "Start"
         self.__click_lock = threading.Lock()
 
@@ -69,14 +69,14 @@ class GUI(View):
         Executes the window
         :param control: Instance of the Control- Class
         """
-        self.__control = control
+        super(GUI, self).start_view(control)
         self.__end_key_text.delete('1.0', tk.END)
         self.__end_key_text.insert('1.0', control.get_stop_key())
         self.__end_key_text['state'] = 'disabled'
         try:
             self.__window.mainloop()
         except KeyboardInterrupt:
-            if self.__control.stop():
+            if self._control.stop():
                 print("Keylogger has been stopped.")
             self.__window.destroy()
 
@@ -84,8 +84,8 @@ class GUI(View):
         """
         Terminates the Keylogger if the window is closed and keylogger is still running
         """
-        if self.__control.keylogger_is_running():
-            if self.__control.stop():
+        if self._control.keylogger_is_running():
+            if self._control.stop():
                 messagebox.showinfo("Keylogger Stopped", "Keylogger has been stopped.")
             else:
                 messagebox.showerror("Error!", "Couldn't stop Keylogger before Closing.")
@@ -108,11 +108,11 @@ class GUI(View):
         if self.__start_button['text'] == "Start":
             self.__start_button['text'] = "Stop"
             self.__set_button['state'] = 'disabled'
-            if not self.__control.start():
+            if not self._control.start():
                 messagebox.showerror("Error!", "Keylogger could not be started.")
             self.__click_lock.release()
         elif self.__start_button['text'] == "Stop":
-            if not self.__control.stop():
+            if not self._control.stop():
                 messagebox.showerror("Error!", "Keylogger could not be stopped.")
 
     def __clicked_set_key(self) -> None:
@@ -138,11 +138,11 @@ class GUI(View):
         Sets the stop-key of the Keylogger
         """
         try:
-            if not self.__control.set_stop_key():
+            if not self._control.set_stop_key():
                 messagebox.showerror("Error!", "New End-Key could not be set.")
             self.__end_key_text["state"] = "normal"
             self.__end_key_text.delete('1.0', tk.END)
-            self.__end_key_text.insert('1.0', self.__control.get_stop_key())
+            self.__end_key_text.insert('1.0', self._control.get_stop_key())
             self.__end_key_text.configure(fg="black")
             self.__end_key_text['state'] = 'disabled'
 

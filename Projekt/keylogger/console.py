@@ -14,6 +14,7 @@ class Console(View):
         Starts the Interface of the Console. Handles user Input
         :param control: Instance of the Control-Class
         """
+        super(Console, self).start_view(control)
         print("Welcome to the Keylogger!\n")
         print("Possible commands are:")
         help_text_dict = {
@@ -33,34 +34,34 @@ class Console(View):
                 self.__write_lock.acquire()
 
                 if console_input == "start":
-                    if control.start():
+                    if self._control.start():
                         print("Keylogger started successfully.")
-                        key = control.get_stop_key()
+                        key = self._control.get_stop_key()
                         print("Type \"stop\" or press \"%s\" to end the keylogger.\n" % key)
                     else:
                         print("The Keylogger is already terminated.\n")
 
                 elif console_input == "stop":
-                    if not control.stop():
+                    if not self._control.stop():
                         print("The Keylogger is already terminated.\n")
 
                 elif console_input == "exit":
-                    if control.keylogger_is_running():
+                    if self._control.keylogger_is_running():
                         print("Please terminate the keylogger with \"stop\" first.")
                     else:
                         sys.exit()
 
                 elif console_input == "set stop key":
-                    if not control.keylogger_is_running():
+                    if not self._control.keylogger_is_running():
                         print("Please press the key you want to use as stop key.\n")
-                    if control.set_stop_key():
-                        key = control.get_stop_key()
+                    if self._control.set_stop_key():
+                        key = self._control.get_stop_key()
                         print("Key \"%s\" was set as stop-key.\n" % key)
                     else:
                         print("You can't set a stop key while the keylogger is running")
 
                 elif console_input == "show stop key":
-                    key = control.get_stop_key()
+                    key = self._control.get_stop_key()
                     print("Key \"%s\" was set as stop-key.\n" % key)
 
                 elif console_input == "help":
@@ -76,7 +77,7 @@ class Console(View):
                     self.__write_lock.release()
 
             except KeyboardInterrupt:
-                if control.stop():
+                if self._control.stop():
                     print("\nKeylogger was stopped.")
                 sys.exit()
 

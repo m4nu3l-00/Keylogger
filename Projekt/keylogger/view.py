@@ -1,11 +1,14 @@
 class View:
+    def __init__(self):
+        self._control = None
+
     def start_view(self, control) -> None:
         """
-        Abstract Method, must be overwritten
-        Should start the view
+        Should be overwritten and start the view
+        This parent class method sets the control object
         :param control: Instance of the control-class
         """
-        raise NotImplementedError('subclasses must override start_view()!')
+        self._control = control
 
     def show_keylogger_stopped(self) -> None:
         """
