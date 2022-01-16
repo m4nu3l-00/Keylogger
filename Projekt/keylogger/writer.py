@@ -30,7 +30,7 @@ class CsvWriter:
                     if type(event_array[0]) == str and type(event_array[1]) == float and type(event_array[2]) == bool:
                         self.__write_csv(event_array)
                     else:
-                        raise Exception("Type Error")
+                        raise Exception("Type Error.")
                 except Exception:
                     raise Exception("Error while reading Buffer and writing to the array.")
         except Exception as e:

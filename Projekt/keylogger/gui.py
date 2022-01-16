@@ -137,21 +137,17 @@ class GUI(View):
         """
         Sets the stop-key of the Keylogger
         """
-        try:
-            if not self._control.set_stop_key():
-                messagebox.showerror("Error!", "New End-Key could not be set.")
-            self.__end_key_text["state"] = "normal"
-            self.__end_key_text.delete('1.0', tk.END)
-            self.__end_key_text.insert('1.0', self._control.get_stop_key())
-            self.__end_key_text.configure(fg="black")
-            self.__end_key_text['state'] = 'disabled'
+        if not self._control.set_stop_key():
+            messagebox.showerror("Error!", "New End-Key could not be set.")
+        self.__end_key_text["state"] = "normal"
+        self.__end_key_text.delete('1.0', tk.END)
+        self.__end_key_text.insert('1.0', self._control.get_stop_key())
+        self.__end_key_text.configure(fg="black")
+        self.__end_key_text['state'] = 'disabled'
 
-            self.__start_button["state"] = "normal"
-            self.__set_button["state"] = "normal"
-            self.__click_lock.release()
-        except:
-            global_variables.error_text = "The keylogger has crashed."
-            global_variables.error_flag.set()
+        self.__start_button["state"] = "normal"
+        self.__set_button["state"] = "normal"
+        self.__click_lock.release()
 
     def error(self, text: str) -> None:
         """

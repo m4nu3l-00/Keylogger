@@ -1,5 +1,5 @@
 from pynput import keyboard
-
+import global_variables
 
 class OneLog:
 
@@ -25,5 +25,7 @@ class OneLog:
             with keyboard.Listener(on_press=self.__on_key_press) as listener:
                 listener.join()
             return self.__key
-        except Exception:
-            raise Exception("Error while logging Stop-Keylogger")
+
+        except:
+            global_variables.error_text = "The logging of the end-key failed."
+            global_variables.error_flag.set()
