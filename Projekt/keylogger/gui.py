@@ -157,7 +157,7 @@ class GUI(View):
 
     def error(self, text: str) -> None:
         """
-        Displays the error on the gui
+        Displays the error on the gui and closes the program
         :param text: Error-text
         """
         messagebox.showerror("Error!", "Error occurred:\n" + text)

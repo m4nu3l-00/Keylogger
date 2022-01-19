@@ -94,7 +94,7 @@ class Console(View):
 
     def error(self, text: str) -> None:
         """
-        Displays the error on the console
+        Displays the error on the console and closes the program
         :param text: Error-text
         """
         print("Error occurred:\n" + text)

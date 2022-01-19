@@ -23,7 +23,7 @@ class View:
     def error(self, text: str) -> None:
         """
         Abstract Method, must be overwritten
-        Should notify if an error occurred
+        Should notify if an error occurred and close the program
         :param text: Error-text
         """
         raise NotImplementedError('subclasses must override error()!')
