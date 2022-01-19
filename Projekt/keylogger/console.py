@@ -35,6 +35,7 @@ class Console(View):
 
                 if console_input == "start":
                     if self._control.start():
+                        self._keylogger_stopped.clear()
                         print("Keylogger started successfully.")
                         key = self._control.get_stop_key()
                         print("Type \"stop\" or press \"%s\" to end the keylogger.\n" % key)
@@ -78,6 +79,7 @@ class Console(View):
 
             except KeyboardInterrupt:
                 if self._control.stop():
+                    self._keylogger_stopped.wait()
                     print("\nKeylogger was stopped.")
                 sys.exit()
 
@@ -86,7 +88,7 @@ class Console(View):
         Prints that the Keylogger has stopped
         """
         print("Keylogger terminated successfully!")
-
+        self._keylogger_stopped.set()
         if self. __write_lock.locked():
             self.__write_lock.release()
 

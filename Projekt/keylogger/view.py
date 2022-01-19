@@ -1,6 +1,9 @@
+from threading import Event
+
 class View:
     def __init__(self):
         self._control = None
+        self._keylogger_stopped = Event()
 
     def start_view(self, control) -> None:
         """
