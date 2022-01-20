@@ -78,9 +78,12 @@ class Console(View):
                     self.__write_lock.release()
 
             except KeyboardInterrupt:
-                if self._control.stop():
-                    self._keylogger_stopped.wait()
-                    print("\nKeylogger was stopped.")
+                if self._control.keylogger_is_running():
+                    if self._control.stop():
+                        self._keylogger_stopped.wait()
+                        print("Keylogger has been stopped.")
+                    else:
+                        print("Couldn't stop Keylogger before Closing.")
                 sys.exit()
 
     def show_keylogger_stopped(self) -> None:
