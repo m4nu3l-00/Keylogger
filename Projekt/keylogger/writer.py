@@ -4,7 +4,7 @@ import os
 import global_variables
 
 
-class CsvWriter:
+class Writer:
 
     def __init__(self, buffer: Buffer):
         """

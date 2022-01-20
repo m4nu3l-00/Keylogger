@@ -2,7 +2,7 @@ import threading
 from buffer import Buffer
 from keylogger import Keylogger
 from view import View
-from writer import CsvWriter
+from writer import Writer
 from one_log import OneLog
 
 import global_variables
@@ -30,7 +30,7 @@ class Control:
 
         buffer = Buffer()
         self.__keylogger = Keylogger(buffer, self.__stop_key)
-        writer = CsvWriter(buffer)
+        writer = Writer(buffer)
 
         self.__writer_thread = threading.Thread(target=writer.read_buffer)
         self.__writer_thread.daemon = True
