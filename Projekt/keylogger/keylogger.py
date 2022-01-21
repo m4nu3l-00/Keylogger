@@ -4,7 +4,6 @@ from pynput import keyboard
 from buffer import Buffer
 import global_variables
 
-
 class Keylogger:
     def __init__(self, buffer: Buffer, key: str):
         """
@@ -22,19 +21,18 @@ class Keylogger:
         """
         Event method if a key was released
         :param key: The released key
-        :return: true, if the listening should be continuedl
+        :return: true, if the listening should be continued
         """
-        key_string = str(key)
-        if key_string.replace('\'', '').isalpha():
-            key_string = key_string.upper()
+        key_string = str(key).upper()
         if key_string not in self.__pressed_keys:
             return True
         release_time = time.time()
-        # Special Case when used special keys
+        print(key_string)
+        # Special Case if key is shift
         special_keys = ("KEY.SHIFT", "KEY.CTRL_L", "KEY.ALT_L", "KEY.ALT_GR", "KEY.SHIFT_R", "KEY.ALT_R", "KEY.CTRL_R")
         if key_string in special_keys:
             for char in self.__pressed_keys:
-                if char not in special_keys:
+                if not char.replace('\'', '').isalpha() and char not in special_keys:
                     self.__buffer.write_to_buffer([char, release_time, False])
                     self.__pressed_keys.remove(char)
         self.__buffer.write_to_buffer([key_string, release_time, False])
@@ -47,14 +45,12 @@ class Keylogger:
         :param key: The pressed key
         :return: true, if the listening should be continued
         """
-        key_string = str(key)
-        if key_string.replace('\'', '').isalpha():
-            key_string = key_string.upper()
+        key_string = str(key).upper()
         if key_string in self.__pressed_keys:
             return True
         self.__pressed_keys.append(key_string)
         press_time = time.time()
-        if key_string == self.__stop_key.upper():
+        if key_string == self.__stop_key:
             self.stop_logging()
         else:
             self.__buffer.write_to_buffer([key_string, press_time, True])
