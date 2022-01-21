@@ -27,7 +27,6 @@ class Keylogger:
         if key_string not in self.__pressed_keys:
             return True
         release_time = time.time()
-        print(key_string)
         # Special Case if key is shift
         special_keys = ("KEY.SHIFT", "KEY.CTRL_L", "KEY.ALT_L", "KEY.ALT_GR", "KEY.SHIFT_R", "KEY.ALT_R", "KEY.CTRL_R")
         if key_string in special_keys:
