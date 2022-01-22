@@ -12,7 +12,7 @@ class GUI(View):
     def __init__(self):
         super(GUI, self).__init__()
         self.__state = "Start"
-        self.__click_lock = threading.Lock()
+        #self.__click_lock = threading.Lock()
 
         self.__window = tk.Tk()
         self.__window.resizable(True, False)
@@ -101,21 +101,21 @@ class GUI(View):
         self.__start_button['text'] = "Start"
         self.__set_button['state'] = 'normal'
         self.__start_button['state'] = 'normal'
-        if self.__click_lock.locked():
-            self.__click_lock.release()
+        #if self.__click_lock.locked():
+            #self.__click_lock.release()
 
     def __clicked_start(self) -> None:
         """
         Starting the Keylogger
         """
-        self.__click_lock.acquire()
+        #self.__click_lock.acquire()
         self._keylogger_stopped.clear()
         if self.__start_button['text'] == "Start":
             self.__start_button['text'] = "Stop"
             self.__set_button['state'] = 'disabled'
             if not self._control.start():
                 messagebox.showerror("Error!", "Keylogger could not be started.")
-            self.__click_lock.release()
+            #self.__click_lock.release()
         elif self.__start_button['text'] == "Stop":
             self.__start_button['state'] = 'disabled'
             if not self._control.stop():
@@ -125,7 +125,7 @@ class GUI(View):
         """
         Uses a Thread to set a new stop-key
         """
-        self.__click_lock.acquire()
+        #self.__click_lock.acquire()
         self.__start_button["state"] = "disabled"
         self.__set_button["state"] = "disabled"
 
@@ -153,7 +153,7 @@ class GUI(View):
 
         self.__start_button["state"] = "normal"
         self.__set_button["state"] = "normal"
-        self.__click_lock.release()
+        #self.__click_lock.release()
 
     def error(self, text: str) -> None:
         """
