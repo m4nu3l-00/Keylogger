@@ -95,7 +95,7 @@ class Console(View):
         if self. __write_lock.locked():
             self.__write_lock.release()
 
-    def error(self, text: str) -> None:
+    def show_error(self, text: str) -> None:
         """
         Displays the error on the console and closes the program
         :param text: Error-text

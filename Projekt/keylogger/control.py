@@ -97,4 +97,4 @@ class Control:
         """
         global_variables.error_flag.wait()
         if global_variables.error_text != "":
-            self.__view.error(global_variables.error_text)
+            self.__view.show_error(global_variables.error_text)

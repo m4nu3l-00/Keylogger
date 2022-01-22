@@ -155,7 +155,7 @@ class GUI(View):
         self.__set_button["state"] = "normal"
         #self.__click_lock.release()
 
-    def error(self, text: str) -> None:
+    def show_error(self, text: str) -> None:
         """
         Displays the error on the gui and closes the program
         :param text: Error-text

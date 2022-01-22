@@ -20,7 +20,7 @@ class View:
         """
         raise NotImplementedError('subclasses must override show_keylogger_stopped()!')
 
-    def error(self, text: str) -> None:
+    def show_error(self, text: str) -> None:
         """
         Abstract Method, must be overwritten
         Should notify if an error occurred and close the program
