@@ -7,6 +7,7 @@ from control import Control
 
 class Console(View):
     def __init__(self):
+        super(Console, self).__init__()
         self.__write_lock = threading.Lock()
 
     def start_view(self, control: Control) -> None:

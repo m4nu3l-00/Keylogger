@@ -76,9 +76,7 @@ class GUI(View):
         try:
             self.__window.mainloop()
         except KeyboardInterrupt:
-            if self._control.stop():
-                print("Keylogger has been stopped.")
-            self.__window.destroy()
+            self.__end_after_close()
 
     def __end_after_close(self) -> None:
         """

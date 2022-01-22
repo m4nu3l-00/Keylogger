@@ -1,5 +1,6 @@
 from threading import Event
 
+
 class View:
     def __init__(self):
         self._control = None
