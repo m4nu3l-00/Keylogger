@@ -44,7 +44,9 @@ class Console(View):
                         print("The Keylogger is already terminated.\n")
 
                 elif console_input == "stop":
-                    if not self._control.stop():
+                    if self._control.stop():
+                        print("Stopping the keylogger...")
+                    else:
                         print("The Keylogger is already terminated.\n")
 
                 elif console_input == "exit":
