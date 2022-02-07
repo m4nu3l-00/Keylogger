@@ -12,6 +12,7 @@ def main(argv) -> None:
     """
     The main-Method of the program
     The arguments are evaluated and the respective view (and control) is started
+    :param argv: The arguments with which the program was started
     """
     console = False
     gui = False
