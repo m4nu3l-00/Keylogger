@@ -5,9 +5,9 @@ import threading
 class Buffer:
     def __init__(self):
         """
-        Initialize a Buffer with a 10 000 000 Items Space
+        Initialize a Buffer with a 576 000 Items Space
         """
-        self.__buffer = queue.Queue(10000000)
+        self.__buffer = queue.Queue(576000)
 
     def write_to_buffer(self, item: list) -> None:
         """
