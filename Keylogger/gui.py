@@ -10,9 +10,12 @@ from control import Control
 
 class GUI(View):
     def __init__(self):
+        """
+        Initialize an Instance
+        The object is used for graphical interaction with the user
+        """
         super(GUI, self).__init__()
         self.__state = "Start"
-        #self.__click_lock = threading.Lock()
 
         self.__window = tk.Tk()
         self.__window.resizable(True, False)

@@ -5,10 +5,10 @@ import global_variables
 
 
 class Writer:
-
     def __init__(self, buffer: Buffer):
         """
         Initialize an Instance with given Buffer
+        The object is used to write items from the buffer into a file
         :param buffer: Object of the Buffer class
         """
         self.__buffer = buffer

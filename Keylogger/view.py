@@ -3,6 +3,10 @@ from threading import Event
 
 class View:
     def __init__(self):
+        """
+        Initialize an Instance
+        Should only be called from subclasses
+        """
         self._control = None
         self._keylogger_stopped = Event()
 

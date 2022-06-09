@@ -8,6 +8,7 @@ class Keylogger:
     def __init__(self, buffer: Buffer, key: str):
         """
         Initialize an Instance with given Buffer
+        The object is used to log the pressed and released keys
         :param buffer: Object of the Buffer class
         """
         self.__pressed_keys = []
