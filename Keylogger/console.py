@@ -9,7 +9,7 @@ class Console(View):
     def __init__(self):
         """
         Initialize an Instance.
-        Is used for console interaction with the user.
+        The object is used for console interaction with the user.
         """
         super(Console, self).__init__()
         self.__write_lock = threading.Lock()
