@@ -10,6 +10,10 @@ import global_variables
 
 class Control:
     def __init__(self, view: View):
+        """
+        Initialize an Instance
+        The object is used to manage all other objects
+        """
         self.__stop_key = "Key.end"
         self.__keylogger = None
         self.__writer_thread = None
