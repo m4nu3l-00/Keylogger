@@ -12,7 +12,7 @@ class GUI(View):
     def __init__(self):
         """
         Initialize an Instance
-        Is used for graphical interaction with the user
+        The object is used for graphical interaction with the user
         """
         super(GUI, self).__init__()
         self.__state = "Start"
