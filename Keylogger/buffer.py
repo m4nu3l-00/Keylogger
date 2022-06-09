@@ -11,15 +11,15 @@ class Buffer:
 
     def write_to_buffer(self, item: list) -> None:
         """
-        Writes one Item (contains a List) into the Buffer
-        :param item: List of Items (key, time, event)
+        Writes one item (contains a list) into the Buffer
+        :param item: List of items (key, time, event)
         """
         self.__buffer.put(item)
 
     def read_from_buffer(self) -> list:
         """
-        Reads Items from Buffer
-        :return: One Item of the Buffer (contains a List)
+        Reads items from the buffer
+        :return: One item of the buffer (contains a list)
         """
         if self.__buffer.full():
             print("Warning! Queue is full. Logged Data may be incorrect.")

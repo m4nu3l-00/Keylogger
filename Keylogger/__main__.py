@@ -1,11 +1,8 @@
 import sys
 import getopt
-from threading import Event
 from console import Console
 from control import Control
 from gui import GUI
-
-import global_variables
 
 
 def main(argv) -> None:
@@ -46,7 +43,7 @@ def main(argv) -> None:
 
 def print_help():
     """
-    Prints the possible arguments for starting program
+    Prints the possible arguments for the program
     """
     print("Keylogger v0.1")
     print("Arguments:")
