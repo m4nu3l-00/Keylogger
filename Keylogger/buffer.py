@@ -1,12 +1,11 @@
 import queue
-import threading
 
 
 class Buffer:
     def __init__(self):
         """
-        Initialize a Buffer with a 576 000 Items Space
-        The object is used as buffer between a Keylogger and a Writer object
+        Initialize a Buffer with a 576 000 items space
+        The object is used as Buffer between a Keylogger and a Writer object
         """
         self.__buffer = queue.Queue(576000)
 
@@ -19,8 +18,8 @@ class Buffer:
 
     def read_from_buffer(self) -> list:
         """
-        Reads items from the buffer
-        :return: One item of the buffer (contains a list)
+        Reads items from the Buffer
+        :return: One item of the Buffer (contains a list)
         """
         if self.__buffer.full():
             print("Warning! Queue is full. Logged Data may be incorrect.")

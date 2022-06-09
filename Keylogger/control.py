@@ -11,8 +11,9 @@ import global_variables
 class Control:
     def __init__(self, view: View):
         """
-        Initialize an Instance
+        Initialize an instance
         The object is used to manage all other objects
+        :param view: The view object that is used to communicate with the user
         """
         self.__stop_key = "Key.end"
         self.__keylogger = None
@@ -26,7 +27,7 @@ class Control:
 
     def start(self) -> bool:
         """
-        This method is used to start the keylogger.
+        This method is used to start the keylogger
         :return: True, if the keylogger was started; False, if it is already active
         """
         if self.keylogger_is_running():
@@ -62,7 +63,7 @@ class Control:
 
     def stop(self) -> bool:
         """
-        This method is used to stop the keylogger.
+        This method is used to stop the keylogger
         :return: True, if the keylogger was stopped successfully; False, if the keylogger is not running
         """
         if not self.keylogger_is_running():
@@ -73,13 +74,13 @@ class Control:
     def keylogger_is_running(self) -> bool:
         """
         This method is used to check if the keylogger is running
-        :return: True, if the keylogger is running
+        :return: True, if the keylogger is running; False, if not
         """
         return self.__keylogger is not None and self.__keylogger.keylogger_running()
 
     def get_stop_key(self) -> str:
         """
-        This method is used to get current stop key
+        This method is used to get the current stop key
         :return: The current stop key
         """
         return self.__stop_key.replace('\'', '').replace('Key.', '').replace('[', '').replace(']', '')\

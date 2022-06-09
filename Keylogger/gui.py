@@ -3,7 +3,6 @@ import threading
 import tkinter as tk
 from tkinter import messagebox
 
-import global_variables
 from view import View
 from control import Control
 
@@ -11,7 +10,7 @@ from control import Control
 class GUI(View):
     def __init__(self):
         """
-        Initialize an Instance
+        Initialize an instance
         The object is used for graphical interaction with the user
         """
         super(GUI, self).__init__()
@@ -70,7 +69,7 @@ class GUI(View):
     def start_view(self, control: Control) -> None:
         """
         Executes the window
-        :param control: Instance of the Control- Class
+        :param control: Instance of the control class
         """
         super(GUI, self).start_view(control)
         self.__end_key_text.delete('1.0', tk.END)
@@ -105,7 +104,7 @@ class GUI(View):
 
     def __clicked_start(self) -> None:
         """
-        Starting the Keylogger
+        Start the Keylogger
         """
         self._keylogger_stopped.clear()
         if self.__start_button['text'] == "Start":
@@ -120,7 +119,7 @@ class GUI(View):
 
     def __clicked_set_key(self) -> None:
         """
-        Uses a Thread to set a new stop-key
+        Uses a thread to set a new stop key
         """
         self.__start_button["state"] = "disabled"
         self.__set_button["state"] = "disabled"
@@ -137,10 +136,10 @@ class GUI(View):
 
     def __set_stop_key(self) -> None:
         """
-        Sets the stop-key of the Keylogger
+        Sets the stop key of the Keylogger
         """
         if not self._control.set_stop_key():
-            messagebox.showerror("Error!", "New End-Key could not be set.")
+            messagebox.showerror("Error!", "New end-key could not be set.")
         self.__end_key_text["state"] = "normal"
         self.__end_key_text.delete('1.0', tk.END)
         self.__end_key_text.insert('1.0', self._control.get_stop_key())
@@ -153,7 +152,7 @@ class GUI(View):
     def show_error(self, text: str) -> None:
         """
         Displays the error on the gui and closes the program
-        :param text: Error-text
+        :param text: error text
         """
         messagebox.showerror("Error!", "Error occurred:\n" + text)
         self.__window.destroy()

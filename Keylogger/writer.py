@@ -7,17 +7,16 @@ import global_variables
 class Writer:
     def __init__(self, buffer: Buffer):
         """
-        Initialize an Instance with given Buffer
-        The object is used to write items from the buffer into a file
-        :param buffer: Object of the Buffer class
+        Initialize an instance with given Buffer
+        The object is used to write items from the Buffer into a file
+        :param buffer: Instance of the Buffer class
         """
         self.__buffer = buffer
         self.__csv_file = None
 
     def read_buffer(self) -> None:
         """
-        Read and clear the Item of the buffer
-        :return: no value given back, just returns
+        Read and clear the item of the Buffer
         """
         try:
             self.__open_file()
@@ -39,7 +38,7 @@ class Writer:
 
     def __open_file(self) -> None:
         """
-        opens the CSV- file
+        opens the csv-file
         """
         try:
             if os.path.isfile(os.path.dirname(os.path.realpath(__file__)) + "/keylogger.csv"):
@@ -50,8 +49,8 @@ class Writer:
 
     def __write_csv(self, event_array: list) -> None:
         """
-        writes an Item to the CSV- file and saves the csv- file
-        :param event_array:
+        writes an item to the csv-file and saves the csv-file
+        :param event_array: List of items (key, time, event)
         """
         writer = csv.writer(self.__csv_file)
         writer.writerow(event_array)

@@ -8,17 +8,17 @@ from control import Control
 class Console(View):
     def __init__(self):
         """
-        Initialize an Instance.
-        The object is used for console interaction with the user.
+        Initialize an instance
+        The object is used for console interaction with the user
         """
         super(Console, self).__init__()
         self.__write_lock = threading.Lock()
 
     def start_view(self, control: Control) -> None:
         """
-        Starts the Interface of the Console
-        Handles user Input
-        :param control: Instance of the Control-Class
+        Starts the interface of the Console
+        Handles user input
+        :param control: Instance of the Control class
         """
         super(Console, self).start_view(control)
         print("Welcome to the Keylogger!\n")
@@ -106,7 +106,7 @@ class Console(View):
     def show_error(self, text: str) -> None:
         """
         Displays the error on the console and closes the program
-        :param text: Error-text
+        :param text: error text
         """
         print("Error occurred:\n" + text)
         sys.exit()

@@ -4,7 +4,7 @@ import global_variables
 class OneLog:
     def __init__(self):
         """
-        Initialize an Instance
+        Initialize an instance
         The object is used to log one key press
         """
         self.__key = None
@@ -14,7 +14,7 @@ class OneLog:
         """
         Event method if a key was pressed
         :param key: The released key
-        :return: true, if the listening should be continued
+        :return: True, if the listening should be continued
         """
         self.__key = str(key)
         return False
