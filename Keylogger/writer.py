@@ -5,7 +5,6 @@ import global_variables
 
 
 class Writer:
-
     def __init__(self, buffer: Buffer):
         """
         Initialize an Instance with given Buffer
