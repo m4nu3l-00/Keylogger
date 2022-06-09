@@ -2,7 +2,6 @@ from pynput import keyboard
 import global_variables
 
 class OneLog:
-
     def __init__(self):
         self.__key = None
         self.__stop_event = None
