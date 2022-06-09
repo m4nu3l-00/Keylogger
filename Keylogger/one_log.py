@@ -3,6 +3,10 @@ import global_variables
 
 class OneLog:
     def __init__(self):
+        """
+        Initialize an Instance
+        The object is used to log one key press
+        """
         self.__key = None
         self.__stop_event = None
 
