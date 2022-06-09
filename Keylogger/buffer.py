@@ -6,6 +6,7 @@ class Buffer:
     def __init__(self):
         """
         Initialize a Buffer with a 576 000 Items Space
+        The object is used as buffer between a Keylogger and a Writer object
         """
         self.__buffer = queue.Queue(576000)
 
