@@ -5,7 +5,7 @@ from tkinter import messagebox
 
 from view import View
 from control import Control
-
+import global_variables
 
 class GUI(View):
     def __init__(self):
@@ -15,11 +15,38 @@ class GUI(View):
         """
         super(GUI, self).__init__()
         self.__state = "Start"
+        self.__gui_buffer = global_variables.gui_buffer
 
         self.__window = tk.Tk()
         self.__window.resizable(True, False)
         self.__window.title('Keylogger')
         self.__window.protocol("WM_DELETE_WINDOW", self.__end_after_close)
+
+        self.__train_test_var = tk.IntVar()
+        self.__test_button = tk.Radiobutton(self.__window, text="test", variable=self.__train_test_var, value=0)
+        self.__test_button.pack()
+        self.__train_button = tk.Radiobutton(self.__window,text="train", variable=self.__train_test_var, value=1)
+        self.__train_button.pack()
+
+        self.__user_name_label = tk.Label(
+            text="User Name"
+        )
+
+        self.__user_name_label.pack(
+            padx=10,
+            pady=2,
+            fill='both'
+        )
+
+        self.__user_name_input = tk.Entry(
+            self.__window,
+
+        )
+        self.__user_name_input.pack(
+            padx=10,
+            pady=2,
+            fill='both'
+        )
 
         self.__start_button = tk.Button(
             self.__window,
@@ -29,6 +56,49 @@ class GUI(View):
         self.__start_button.pack(
             padx=10,
             pady=2,
+            fill='both'
+        )
+
+        self.__password_label = tk.Label(
+            text="Password"
+        )
+
+        self.__password_label.pack(
+            padx=10,
+            pady=2,
+            fill='both'
+        )
+
+        self.__password_input = tk.Entry(
+            self.__window,
+            text='Password',
+            show="*"
+        )
+
+        self.__password_input.pack(
+            padx=10,
+            pady=2,
+            fill='both'
+        )
+        self.__submit_button = tk.Button(
+            self.__window,
+            text='Submit',
+            command=self.__clicked_submit
+        )
+        self.__submit_button.pack(
+            padx=10,
+            pady=2,
+            fill='both'
+        )
+
+        self.__result_text = tk.Text(
+            self.__window,
+            height=1
+        )
+        self.__result_text.insert('1.0', "Result:")
+        self.__result_text.pack(
+            padx=10,
+            pady=5,
             fill='both'
         )
 
@@ -75,6 +145,11 @@ class GUI(View):
         self.__end_key_text.delete('1.0', tk.END)
         self.__end_key_text.insert('1.0', control.get_stop_key())
         self.__end_key_text['state'] = 'disabled'
+
+        self.__result_text.delete('1.0', tk.END)
+        self.__result_text.insert('1.0', "Login Result: Unknown")
+        self.__result_text['state'] = 'disabled'
+        self.__submit_button['state'] = 'disabled'
         try:
             self.__window.mainloop()
         except KeyboardInterrupt:
@@ -106,16 +181,32 @@ class GUI(View):
         """
         Start the Keylogger
         """
-        self._keylogger_stopped.clear()
-        if self.__start_button['text'] == "Start":
-            self.__start_button['text'] = "Stop"
-            self.__set_button['state'] = 'disabled'
-            if not self._control.start():
-                messagebox.showerror("Error!", "Keylogger could not be started.")
-        elif self.__start_button['text'] == "Stop":
-            self.__start_button['state'] = 'disabled'
-            if not self._control.stop():
-                messagebox.showerror("Error!", "Keylogger could not be stopped.")
+        name = str(self.__user_name_input.get())
+        if name == "":
+            messagebox.showerror("Error!", "No name entered.")
+        else:
+            self._keylogger_stopped.clear()
+            if self.__start_button['text'] == "Start":
+                self.__start_button['text'] = "Stop"
+                self.__set_button['state'] = 'disabled'
+                if not self._control.start():
+                    messagebox.showerror("Error!", "Keylogger could not be started.")
+                else:
+                    self.__submit_button['state'] = 'normal'
+                    train = self.__train_test_var.get()
+                    self.__user_name_input['state'] = 'disabled'
+                    self.__train_button['state'] = 'disabled'
+                    self.__test_button['state'] = 'disabled'
+                    self.__gui_buffer.write_to_buffer([train, name])
+            elif self.__start_button['text'] == "Stop":
+                self.__start_button['state'] = 'disabled'
+                if not self._control.stop():
+                    messagebox.showerror("Error!", "Keylogger could not be stopped.")
+                self.__submit_button['state'] = 'disabled'
+                self.__user_name_input['state'] = 'normal'
+                self.__user_name_input.delete(0, tk.END)
+                self.__train_button['state'] = 'normal'
+                self.__test_button['state'] = 'normal'
 
     def __clicked_set_key(self) -> None:
         """
@@ -148,6 +239,16 @@ class GUI(View):
 
         self.__start_button["state"] = "normal"
         self.__set_button["state"] = "normal"
+
+    def __clicked_submit(self) -> None:
+        """
+        Submit the Password
+        """
+        self.__clicked_start()
+        self.__result_text['state'] = 'normal'
+        self.__result_text.delete('1.0', tk.END)
+        self.__result_text.insert('1.0', "Login Result: Access granted")
+        self.__result_text['state'] = 'disabled'
 
     def show_error(self, text: str) -> None:
         """

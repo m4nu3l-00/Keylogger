@@ -4,6 +4,7 @@ import os
 import global_variables
 
 
+
 class Writer:
     def __init__(self, buffer: Buffer):
         """
@@ -12,13 +13,22 @@ class Writer:
         :param buffer: Instance of the Buffer class
         """
         self.__buffer = buffer
+        self.__gui_buffer = global_variables.gui_buffer
         self.__csv_file = None
+        self.__name = ""
+        self.__train = False
 
     def read_buffer(self) -> None:
         """
         Read and clear the item of the Buffer
         """
         try:
+            while True:
+                gui_array = list(self.__gui_buffer.read_from_buffer())
+                self.__train = gui_array[0]
+                self.__name = gui_array[1]
+                if self.__name != '' and self.__train != '':
+                    break
             self.__open_file()
             while True:
                 try:
@@ -41,9 +51,14 @@ class Writer:
         opens the csv-file
         """
         try:
-            if os.path.isfile(os.path.dirname(os.path.realpath(__file__)) + "/keylogger.csv"):
-                os.remove(os.path.dirname(os.path.realpath(__file__)) + "/keylogger.csv")
-            self.__csv_file = open(os.path.dirname(os.path.realpath(__file__)) + "/keylogger.csv", "a+", newline="", encoding="utf-8")
+            self.__name = self.__name.replace(" ", "_")
+            if self.__train:
+                file_name = self.__name + "_train_keylogger.csv"
+            else:
+                file_name = self.__name + "_final_keylogger.csv"
+            if os.path.isfile(os.path.dirname(os.path.realpath(__file__)) + "_" + file_name):
+                os.remove(os.path.dirname(os.path.realpath(__file__)) + "_" + file_name)
+            self.__csv_file = open(os.path.dirname(os.path.realpath(__file__)) + "_" + file_name, "a+", newline="", encoding="utf-8")
         except Exception:
             raise Exception("Can't open keylogger-file.")
 

@@ -3,6 +3,7 @@ import getopt
 from console import Console
 from control import Control
 from gui import GUI
+from buffer import Buffer
 
 
 def main(argv) -> None:

